@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Arif Slot - Game</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .slot-container {
+      display: grid;
+      grid-template-columns: repeat(5, 80px);
+      gap: 12px;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    .slot {
+      width: 80px;
+      height: 80px;
+      background: #2d3436;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .slot img {
+      max-width: 60%;
+    }
+    .logout {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #ff7675;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="login-body">
+  <div class="login-card">
+    <h1 class="app-title">🎰 Arif Slot</h1>
+    <div class="slot-container" id="slotGrid"></div>
+    <button onclick="spin()">🎲 SPIN</button>
+    <audio id="bgm" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" autoplay loop></audio>
+    <button class="logout" onclick="logout()">🔓 Logout</button>
+  </div>
+
+  <script>
+    const symbols = [
+      "https://cdn-icons-png.flaticon.com/512/1043/1043903.png",
+      "https://cdn-icons-png.flaticon.com/512/1043/1043906.png",
+      "https://cdn-icons-png.flaticon.com/512/1043/1043908.png",
+      "https://cdn-icons-png.flaticon.com/512/1043/1043911.png",
+      "https://cdn-icons-png.flaticon.com/512/1043/1043902.png"
+    ];
+
+    const grid = document.getElementById("slotGrid");
+
+    function spin() {
+      grid.innerHTML = "";
+      new Audio("https://www.soundjay.com/button/beep-07.wav").play();
+      for (let i = 0; i < 25; i++) {
+        const img = document.createElement("img");
+        img.src = symbols[Math.floor(Math.random() * symbols.length)];
+        const cell = document.createElement("div");
+        cell.className = "slot";
+        cell.appendChild(img);
+        grid.appendChild(cell);
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "index.html";
+    }
+
+    window.onload = spin;
+    if (!localStorage.getItem("loggedInUser")) window.location.href = "index.html";
+  </script>
+</body>
+</html>
